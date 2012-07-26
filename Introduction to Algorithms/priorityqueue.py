@@ -1,26 +1,21 @@
 
 class PriorityQueue:
     """just some derp to test mechanics and understanding, no real usage"""
-    def __init__(self):
+    def __init__(self,d=2):
         self.queue = []
+        self.d = d
     def parent(self,i):
-        if i > 0:
-            return i/2
+        if i >= 0:
+            return i/self.d
         else:
             return None
-    def left(self,i):
-        i*=2
-        i += 1
-        if i < len(self.queue):
-            return i
-        else:
-            return None
-    def right(self,i):
-        i *= 2
-        if i < len(self.queue):
-            return i
-        else:
-            return None
+    def childs(self,i):
+        for x in xrange(self.d):
+            c = i * self.d + x
+            if c < len(self.queue):
+                yield c
+            else:
+                yield None
     def extract_max(self):
         if len(self.queue) == 0:
             return None
@@ -30,15 +25,10 @@ class PriorityQueue:
         self.max_heapify(0)
         return m
     def max_heapify(self,i):
-        l = self.left(i)
-        r = self.right(i)
-        if l is not None and self.queue[l] > self.queue[i]:
-            largest = l
-        else:
-            largest = i
-        if r is not None and self.queue[r] > self.queue[largest]:
-            largest = r
-        if largest != i:
+        childs = [(x,self.queue[x]) for x in self.childs(i) if x is not None]
+        childs.sort(cmp = lambda (x,y),(x2,y2): y2 - y)
+        if len(childs) >0 and childs[0][1] > self.queue[i]:
+            largest = childs[0][0]
             self.queue[i],self.queue[largest] = self.queue[largest],self.queue[i]
             self.max_heapify(largest)
     def increase_key(self,i,value):
@@ -55,13 +45,14 @@ class PriorityQueue:
         self.increase_key(len(self.queue)-1,key)
 
 if __name__ == '__main__':
-    x = PriorityQueue()
+    x = PriorityQueue(2)
     from random import randint
-    testdata = [randint(-100,100) for _ in range(22)]
+    testdata = [randint(-100,100) for _ in range(4)]
     sorteddata = sorted(testdata,cmp=lambda x,y:y-x)
     for i in testdata: 
         x.insert(i)
     testdata = []
+    print x.queue
     m = x.extract_max()
     while m is not None: 
         testdata.append(m)
