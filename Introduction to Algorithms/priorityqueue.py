@@ -32,11 +32,11 @@ class PriorityQueue:
     def max_heapify(self,i):
         l = self.left(i)
         r = self.right(i)
-        if l and self.queue[l] > self.queue[i]:
+        if l is not None and self.queue[l] > self.queue[i]:
             largest = l
         else:
             largest = i
-        if r and self.queue[r] > self.queue[largest]:
+        if r is not None and self.queue[r] > self.queue[largest]:
             largest = r
         if largest != i:
             self.queue[i],self.queue[largest] = self.queue[largest],self.queue[i]
@@ -63,7 +63,7 @@ if __name__ == '__main__':
         x.insert(i)
     testdata = []
     m = x.extract_max()
-    while m : 
+    while m is not None: 
         testdata.append(m)
         m=x.extract_max()
     print sorteddata
