@@ -14,47 +14,43 @@ from itertools import product
  #'8': ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
  #'9': ['1', '3', '4', '5', '7', '9']}
 CONVERSIONS = \
-{'0': ['0', '8'],
- '1': ['1', '0', '3', '4', '7', '9', '8'],
- '2': ['2', '8'],
- '3': ['3', '9', '8'],
- '4': ['4', '9', '8'],
- '5': ['5', '6', '9', '8'],
- '6': ['6', '8'],
- '7': ['0', '3', '7', '9', '8'],
+{'0': ['8', '0'],
+ '1': ['9', '8', '7', '4', '3', '1', '0'],
+ '2': ['8', '2'],
+ '3': ['9', '8', '3'],
+ '4': ['9', '8', '4'],
+ '5': ['9', '8', '6', '5'],
+ '6': ['8', '6'],
+ '7': ['9', '8', '7', '3', '0'],
  '8': ['8'],
  '9': ['9', '8']}
-digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
+
+digits = ['9', '8', '7', '6', '5', '4', '3', '2', '1', '0']
+
 T = int(stdin.readline())
 for _ in range(T):
     S,M = (x for x in stdin.readline().split())
-    
-    #possibilities = [ ''.join(y) for y in product ( *(CONVERSIONS[x] for x in S))]
-    #print possibilities
-    iM = int(M)
-    iS = int(S)
-    variants = []
+    #variants = []
+    res = '////////'
     for i in range( 1 + len(M) - len(S) ):
-        cur = []
+        prefix_equal = ''
+        prefix_less  = ''
         for x in range(len(M)):
             if x < i or x >= len(S) + i:
                 _from = digits
             else:
                 _from = CONVERSIONS[ S[x - i] ]
             c = M[:1 + x]
-            if x > 0:
-                cur = product(cur, _from)
-            else:
-                cur = _from
-            cur = [''.join(t) for t in cur if ''.join(t) <= c]
-            if len(cur) == 0 :break
             try:
-                _cur = [max([f for f in cur if f < c])]
+                prefix_less = next( \
+                        z for z in (''.join(r) for r in product([prefix_equal or 'z'*x,prefix_less or 'z'*x],_from)) if z < c \
+                )
             except:
-                _cur = []
-            if c in cur:
-                _cur.append(c)
-            cur = _cur
-            if len(cur) == 0 :break
-        variants.extend(cur)
-    print (int(max(variants)))
+                prefix_less = None
+            prefix_equal = c if prefix_equal is not None and c[-1] in _from else None
+            if prefix_equal == prefix_less == None: break
+        #variants.append(max([prefix_equal,prefix_less]))
+        res = max ( [res,prefix_less or '/' , prefix_equal or '/'] )
+        #print res,prefix_equal, prefix_less
+    #print (int(max(variants)))
+    print (int(res))
