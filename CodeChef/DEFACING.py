@@ -2,7 +2,6 @@
 from sys import stdin
 from itertools import product
 
-
 #CONVERSIONS = \
 #{'0': ['0', '1', '7'],
  #'1': ['1'],
@@ -27,7 +26,7 @@ CONVERSIONS = \
  '9': ['9', '8']}
 digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
 T = int(stdin.readline())
-for _ in xrange(T):
+for _ in range(T):
     S,M = (x for x in stdin.readline().split())
     
     #possibilities = [ ''.join(y) for y in product ( *(CONVERSIONS[x] for x in S))]
@@ -35,9 +34,9 @@ for _ in xrange(T):
     iM = int(M)
     iS = int(S)
     variants = []
-    for i in xrange( 1 + len(M) - len(S) ):
+    for i in range( 1 + len(M) - len(S) ):
         cur = []
-        for x in xrange(len(M)):
+        for x in range(len(M)):
             if x < i or x >= len(S) + i:
                 _from = digits
             else:
@@ -58,4 +57,4 @@ for _ in xrange(T):
             cur = _cur
             if len(cur) == 0 :break
         variants.extend(cur)
-    print int(max(variants))
+    print (int(max(variants)))
