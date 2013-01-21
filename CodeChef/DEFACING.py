@@ -41,23 +41,21 @@ for _ in xrange(T):
             if x < i or x >= len(S) + i:
                 _from = digits
             else:
-                #print S, x - i
                 _from = CONVERSIONS[ S[x - i] ]
             c = M[:1 + x]
-            print c, _from
             if x > 0:
                 cur = product(cur, _from)
             else:
                 cur = _from
-            cur = [x for x in cur]
-            print '\t', [''.join(t) for t in cur]
-            for z in cur: print z, ''.join(z) <=c
-            cur = [''.join(t) for t in cur if t <= c]
-            print '\t\t',[c for c in cur]
+            cur = [''.join(t) for t in cur if ''.join(t) <= c]
             if len(cur) == 0 :break
-        variants.append(cur)
-    print variants
-    #variants = [ int(x) for x in variants if len(x) > 0 ]
-    #print ( max ( variants) )
-    break
-            
+            try:
+                _cur = [max([f for f in cur if f < c])]
+            except:
+                _cur = []
+            if c in cur:
+                _cur.append(c)
+            cur = _cur
+            if len(cur) == 0 :break
+        variants.extend(cur)
+    print int(max(variants))
