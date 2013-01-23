@@ -5,15 +5,18 @@ class BinaryTree:
         self.right = right
         self.left  = left
         self.key = key
+        self.parent = None
     def insert(self, key):
         if key > self.key:
             if self.right is None:
                 self.right = BinaryTree(key)
+                self.right.parent = self
             else:
                 self.right.insert(key)
         else:
             if self.left is None:
                 self.left = BinaryTree(key)
+                self.left.parent = self
             else:
                 self.left.insert(key)
     def __str__(self,current_depth=0):
@@ -50,15 +53,61 @@ class BinaryTree:
         if self.right is not None:
             for x in self.right.preorder():
                 yield x
+    
+    def search(self, key):
+        if self.key == key:
+            return self
+        nextNode = None
+        if key > self.key:
+            nextNode = self.right
+        else:
+            nextNode = self.left
+        if nextNode is None:
+            return None
+        else:
+            return nextNode.search(key)
 
+    def min(self):
+        if self.left is None:
+            return self
+        else:
+            return self.left.min()
 
+    def max(self):
+        if self.right is None:
+            return self
+        else:
+            return self.right.max()
 
+    def next(self):
+        if self.right is not None:
+            return self.right.min()
+        p = self.parent
+        x = self
+        while p is not None and p.right == x:
+            x = p
+            p = p.parent
+        return p
+
+    def prev(self):
+        if self.left is not None:
+            return self.left.max()
+        p = self.parent
+        x = self
+        while p is not None and p.left == x:
+            x = p
+            p = p.parent
+        return p
 
 if __name__ == '__main__':
     bt = BinaryTree(20)
     import random
-    for i in xrange(10):
-        bt.insert(random.randint(0,50))
+    if True:
+        for i in xrange(10):
+            bt.insert(random.randint(0,50))
+    else:
+        for i in [20, 14, 11, 2, 1, 48, 30, 22, 22, 21]:
+            bt.insert(i)
     print (bt)
 
 
@@ -73,3 +122,24 @@ if __name__ == '__main__':
     print ("preorder:")
     preorder = [x for x in bt.preorder()]
     print (preorder)
+
+    print "searching {0}".format(inorder[0])
+    print ( bt.search(inorder[0]))
+    print "searching {0}".format(inorder[-1])
+    print ( bt.search(inorder[-1]))
+    print "searching {0}".format(inorder[5])
+    print ( bt.search(inorder[5]))
+    print ("searching -1")
+    print ( bt.search(-1))
+
+    print ()
+
+    print "min : \n" , bt.min()
+    print "max : \n" , bt.max()
+    print "next({0}) : \n".format(inorder[6]) , bt.search(inorder[6]).next()
+    print "prev({0}) : \n".format(inorder[4]) , bt.search(inorder[4]).prev()
+
+
+    print ()
+
+
