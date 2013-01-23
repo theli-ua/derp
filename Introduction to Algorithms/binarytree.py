@@ -7,6 +7,8 @@ class BinaryTree:
         self.key = key
         self.parent = None
     def insert(self, key):
+        if self.search(key) is not None:
+            return
         if key > self.key:
             if self.right is None:
                 self.right = BinaryTree(key)
@@ -98,6 +100,37 @@ class BinaryTree:
             x = p
             p = p.parent
         return p
+    
+    def root(self):
+        if self.parent is None:
+            return self
+        else:
+            return self.parent.root()
+
+    def delete(self):
+        #will return root of new tree
+        root = self.root()
+        if self.left is None or self.right is None:
+            y = self
+        else:
+            y = self.next()
+        if y.left is not None:
+            x = y.left
+        else:
+            x = y.right
+        if x is not None:
+            x.parent = y.parent
+        if y.parent is None:
+            root = x
+        else:
+            if y == y.parent.left:
+                y.parent.left = x
+            else:
+                y.parent.right = x
+        if y != self:
+            self.key = y.key
+        return root
+                
 
 if __name__ == '__main__':
     bt = BinaryTree(20)
@@ -141,5 +174,39 @@ if __name__ == '__main__':
 
 
     print ()
+    to_delete = inorder[4]
+    to_delete = 20
+    print("deleting {0}\n".format(to_delete))
+    bt = bt.search(to_delete).delete()
+    print( bt )
+
+
+    print ("inorder:")
+    inorder = [x for x in bt.inorder()]
+    print (inorder)
+
+    print ("postorder:")
+    postorder = [x for x in bt.postorder()]
+    print (postorder)
+
+    print ("preorder:")
+    preorder = [x for x in bt.preorder()]
+    print (preorder)
+
+    print "searching {0}".format(inorder[0])
+    print ( bt.search(inorder[0]))
+    print "searching {0}".format(inorder[-1])
+    print ( bt.search(inorder[-1]))
+    print "searching {0}".format(inorder[5])
+    print ( bt.search(inorder[5]))
+    print ("searching -1")
+    print ( bt.search(-1))
+
+    print ()
+
+    print "min : \n" , bt.min()
+    print "max : \n" , bt.max()
+    print "next({0}) : \n".format(inorder[6]) , bt.search(inorder[6]).next()
+    print "prev({0}) : \n".format(inorder[4]) , bt.search(inorder[4]).prev()
 
 
