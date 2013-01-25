@@ -107,7 +107,7 @@ class BinaryTree:
         else:
             return self.parent.root()
 
-    def delete(self):
+    def delete_(self):
         #will return root of new tree
         root = self.root()
         if self.left is None or self.right is None:
@@ -130,7 +130,33 @@ class BinaryTree:
         if y != self:
             self.key = y.key
         return root
-                
+    
+    def delete(self):
+        root = self.root()
+        #I'll code this one according to my understanding
+        if self.left is None or self.right is None:
+            child = self.left or self.right
+        else:
+            prev = self.prev()
+            if prev.left is None or prev.right is None:
+                child = prev
+            else:
+                child = self.next()
+        if child not in [self.right,self.left]:
+            root = child.delete()
+        if child is not None:
+            if self.parent is not None:
+                if self.parent.left == self:
+                    self.parent.left = child
+                else:
+                    self.parent.right = child
+            child.parent = self.parent
+            if None not in [self.right,self.left]:
+                child.left = self.left
+                child.right = self.right
+        if root.key == self.key:
+            root = child
+        return root
 
 if __name__ == '__main__':
     bt = BinaryTree(20)
