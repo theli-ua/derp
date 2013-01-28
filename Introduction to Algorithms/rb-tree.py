@@ -5,8 +5,41 @@ class RBTree (BinaryTree):
     def __init__(self,key):
         BinaryTree.__init__(self, key)
         self.isBlack = True
+    def __str__(self,current_depth=0):
+        res = '\t'*current_depth + str(self.key)
+        if self.isBlack: res += '(b)'
+        else: res += '(r)'
+        if self.left is not None:
+            res = '\n'.join([res, self.left.__str__(current_depth + 1)])
+        if self.right is not None:
+            res = '\n'.join([res, self.right.__str__(current_depth + 1)])
+        return res
     def rb_fixup(self):
-        if self.isBlack : return
+        return
+        if self.isBlack: return
+        while self.parent is not None and not self.parent.isBlack:
+            if self.parent == self.parent.parent.left:
+                y = self.parent.parent.right
+                if not y.isBlack:
+                    y.parent.isBlack = True
+                    y.isBlack = True
+                    self.parent.parent.rb_fixup()
+                elif self == self.parent.right:
+                    self.parent.left_rotate()
+                    self.parent.isBlack = True
+                    self.parent.parent.isBlack = False
+                    self.parent.parent.right_rotate()
+            else:
+                y = self.parent.parent.left
+                if not y.isBlack:
+                    y.parent.isBlack = True
+                    y.isBlack = True
+                    self.parent.parent.rb_fixup()
+                elif self == self.parent.left:
+                    self.parent.right_rotate()
+                    self.parent.isBlack = True
+                    self.parent.parent.isBlack = False
+                    self.parent.parent.left_rotate()
 
     def insert(self,key):
         if self.search(key) is not None:
