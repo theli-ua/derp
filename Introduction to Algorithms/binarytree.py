@@ -42,10 +42,10 @@ class BinaryTree:
         if self.right is not None:
             for x in self.right.postorder():
                 yield x
-        yield self.key
         if self.left is not None:
             for x in self.left.postorder():
                 yield x
+        yield self.key
 
     def preorder(self):
         yield self.key
