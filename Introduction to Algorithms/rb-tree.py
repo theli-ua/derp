@@ -49,10 +49,6 @@ class RBTree (BinaryTree):
             self.parent.left_rotate()
             self.parent.right_rotate()
             return self.rb_fixup()
-        else:
-            print 'asdfasdf'
-            self.parent.isBlack = True
-            return self.root()
 
 
     def insert(self,key):
