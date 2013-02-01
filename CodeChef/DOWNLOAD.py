@@ -144,7 +144,7 @@ class RangeTree:
         if self.left is not None and self.left.emax >= Range[0]:
             for x in self.left.find_overlapping(Range):
                 yield x
-        elif self.right is not None:
+        elif self.right is not None and self.right.emax >= Range[0]:
             for x in self.right.find_overlapping(Range):
                 yield x
 

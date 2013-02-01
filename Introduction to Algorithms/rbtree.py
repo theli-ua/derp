@@ -1,5 +1,6 @@
 #!/bin/env python
 from binarytree import BinaryTree
+import pydot
 
 class RBTree (BinaryTree):
     def __init__(self,key):
