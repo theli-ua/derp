@@ -23,14 +23,8 @@ def solve(start, end, _bads):
     def all_moves(word):
         for i in moves:
             yield move(word, i)
-    def visited(word):
-        return visits\
-                [ord(word[0]) - ord('a')]\
-                [ord(word[1]) - ord('a')]\
-                [ord(word[2]) - ord('a')]\
-                [ord(word[3]) - ord('a')]
     def visit(word):
-        visits\
+        bads\
                 [ord(word[0]) - ord('a')]\
                 [ord(word[1]) - ord('a')]\
                 [ord(word[2]) - ord('a')]\
@@ -44,7 +38,6 @@ def solve(start, end, _bads):
                 [ord(word[3]) - ord('a')]
 
     bads = [[[[False] * 26 for x in xrange(26)] for y in xrange(26)] for z in xrange(26)]
-    visits = [[[[False] * 26 for x in xrange(26)] for y in xrange(26)] for z in xrange(26)]
     for bad in _bads:
         bad = bad.split(' ')
         bad_words = [x for x in product(*bad)]
@@ -74,7 +67,7 @@ def solve(start, end, _bads):
             if current == end:
                 return cost
             for word in all_moves(current):
-                if not isBad(word) and not visited(word):
+                if not isBad(word):
                     if word == end:
                         return cost + 1
                     stack.append( (word, cost + 1) )
