@@ -1,9 +1,5 @@
 #!/bin/python
 from bisect import bisect_left
-
-
-# code snippet for illustrating input/output
-
 N = int(raw_input())
 
 x = []
@@ -26,4 +22,10 @@ for i in range(0, N):
     elif l & 1:
         print x[l/2]
     else:
-        print float(x[l/2] + x[l/2 - 1]) / 2.0
+        sum = x[l/2] + x[l/2 - 1]
+        if sum == 0:
+            print sum
+        elif sum & 1:
+            print float(sum)/2.0
+        else:
+            print sum/2
