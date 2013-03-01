@@ -1,22 +1,22 @@
 #!/bin/python
-from bisect import bisect_right
+class Treap:
+    def __init__(self, x, y, left = None, right = None):
+        self.x = x
+        self.y = y
+        self.Left = left
+        self.right = right
+    def Merge(L , R):
+        if L is None: return R
+        if R is None: return L
+
+        if L.y > R.y:
+            newR = Treap.Merge(L.Right, R)
+            return Treap(L.x, L.y, L.Left, newR)
+        else:
+            newL = Treap.Merge(L, R.Left)
+            return Treap(R.x, R.y, newL, R.Right)
 
 N = int(raw_input())
-tasks = []
-deadlines = [0] * N
-sums = [0] * N
 for l in xrange(N):
     x = [int(x) for x in raw_input().split()]
-    i = bisect_right(tasks,x)
-    tasks.insert(i, x)
-    print tasks
-    while i <= l:
-        if i == 0:
-            sums[0] = x[1]
-            deadlines[0] = max(0,x[1] - x[0])
-        else:
-            sums[i] = sums[i-1] + tasks[i][1]
-            deadlines[i] = max(deadlines[i-1],sums[i] - tasks[i][0])
-        i += 1
-    print deadlines[l]
 
