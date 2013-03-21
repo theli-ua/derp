@@ -20,8 +20,9 @@ def displayPathtoPrincess(m,grid):
 # Tail starts here
 m = input()
 
-grid = []
-for i in xrange(0, m):
-    grid.append(raw_input().strip())
+#grid = []
+#for i in xrange(0, m):
+    #grid.append(raw_input().strip())
+grid = ''.join([raw_input().strip() for _ in xrange(m)])
 
 print displayPathtoPrincess(m,grid)
