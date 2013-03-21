@@ -18,7 +18,10 @@ def displayPathtoPrincess(m,grid):
     path.extend([h] * abs(m[1] - p[1]))
     return '\n'.join([MOVES[p] for p in path])
 # Tail starts here
+m = input()
 
+grid = []
+for i in xrange(0, m):
+    grid.append(raw_input().strip())
 
-if __name__ == '__main__':
-    print displayPathtoPrincess(3,'----m-p--')
+print displayPathtoPrincess(m,grid)
