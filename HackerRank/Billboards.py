@@ -13,10 +13,13 @@ prevmax = 0
 for i in xrange(1, N + 1):
     board = B[i-1]
     profits[1][0] = prevmax
-    for j in xrange(1, K + 1):
-        profit = profits[0][j-1] + board
-        profits[1][j] = profit
-        prevmax = max(profit,prevmax)
+    if board == 0:
+        profits[1] = [prevmax] * (K+1)
+    else:
+        for j in xrange(1, K + 1):
+            profit = profits[0][j-1] + board
+            profits[1][j] = profit
+            prevmax = max(profit,prevmax)
     profits.reverse()
 
 print prevmax
