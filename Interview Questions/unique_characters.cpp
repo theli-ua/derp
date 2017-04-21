@@ -13,21 +13,23 @@
 #include <vector>
 #include <iostream>
 
-std::string count(std::string input)
+using namespace std;
+
+string count(string input)
 {
-    std::vector<char> order;
+    vector<char> order;
     unsigned int counts[28 * 2] = {0};
 
-    for(std::string::iterator it = input.begin() ; it != input.end() ; ++it)
+    for(string::iterator it = input.begin() ; it != input.end() ; ++it)
     {
         if (counts[*it - 0x41] == 0)
             order.push_back(*it);
         counts[*it - 0x41] ++ ;
     }
 
-    std::ostringstream ss;
+    ostringstream ss;
 
-    for(std::vector<char>::iterator it = order.begin(); it != order.end() ; ++it)
+    for(vector<char>::iterator it = order.begin(); it != order.end() ; ++it)
     {
         ss << *it << counts[*it - 0x41];
     }
@@ -35,14 +37,13 @@ std::string count(std::string input)
     return ss.str();
 }
 
-int main(int argc, char** argv)
+int main()
 {
-    std::string testInput = "ThunderBirdFirefox";
+    string testInput = "ThunderBirdFirefox";
 
-    std::cout << testInput << std::endl;
+    cout << testInput << endl;
 
-    std::cout << count(testInput) << std::endl;
-
+    cout << count(testInput) << endl;
 
     return 0;
 }
