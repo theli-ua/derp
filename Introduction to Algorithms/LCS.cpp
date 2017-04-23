@@ -59,7 +59,7 @@ int LCS(string A, string B)
     return res;
 }
 
-int main(int argc, char** argv)
+int main()
 {
     cout << "tennis vs penis distance: " << levenshtein("tennis","penis") << endl;
     cout << "ACGTACGTACGT vs AGTACCTACCGT distance: " << levenshtein("ACGTACGTACGT","AGTACCTACCGT") << endl;

@@ -29,7 +29,7 @@ void merge(int* ar, unsigned int len)
     }
 }
 
-int main(int argc, char** argv)
+int main()
 {
     int i;
     int n = sizeof(input) / sizeof(input[0]);
